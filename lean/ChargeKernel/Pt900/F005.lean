@@ -1,0 +1,663 @@
+/-
+Copyright (c) 2026 Fernando. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Fernando
+-/
+module
+
+public import ChargeKernel.Pt900.Data
+
+/-! Generated: kernel checks of the subtree `000011` (1579 leaves). -/
+
+@[expose] public section
+
+namespace ChargeKernel.Pt900
+open CenteredMaximal.General
+
+set_option maxRecDepth 100000
+
+def t_r0000110000 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110000 : nChk 8 14 kAi kCi kL t_r0000110000 768 784 0 16 = some 287733020095319038079533056 := by
+  decide +kernel
+
+def t_r0000110001 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110001 : nChk 8 14 kAi kCi kL t_r0000110001 784 800 0 16 = some 9471874827627962705117184 := by
+  decide +kernel
+
+def t_r0000110002 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110002 : nChk 8 14 kAi kCi kL t_r0000110002 768 784 16 32 = some 285272861096977566554652672 := by
+  decide +kernel
+
+def t_r0000110003 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110003 : nChk 8 14 kAi kCi kL t_r0000110003 784 800 16 32 = some 10036109027519015675756544 := by
+  decide +kernel
+
+def t_r000011000 : NTree := .node t_r0000110000 t_r0000110001 t_r0000110002 t_r0000110003
+theorem k_r000011000 : nChk 8 14 kAi kCi kL t_r000011000 768 800 0 32 = some 592513865047443583015059456 :=
+  nChk_node rfl rfl k_r0000110000 k_r0000110001 k_r0000110002 k_r0000110003 rfl
+
+def t_r000011001 : NTree := NTree.ofString "10000"
+theorem k_r000011001 : nChk 8 14 kAi kCi kL t_r000011001 800 832 0 32 = some 0 := by
+  decide +kernel
+
+def t_r0000110020 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110020 : nChk 8 14 kAi kCi kL t_r0000110020 768 784 32 48 = some 281766310885132911234777088 := by
+  decide +kernel
+
+def t_r0000110021 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110021 : nChk 8 14 kAi kCi kL t_r0000110021 784 800 32 48 = some 10452714700200107757797376 := by
+  decide +kernel
+
+def t_r0000110022 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110022 : nChk 8 14 kAi kCi kL t_r0000110022 768 784 48 64 = some 277225786631150375563952128 := by
+  decide +kernel
+
+def t_r0000110023 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110023 : nChk 8 14 kAi kCi kL t_r0000110023 784 800 48 64 = some 10724778225546270735335424 := by
+  decide +kernel
+
+def t_r000011002 : NTree := .node t_r0000110020 t_r0000110021 t_r0000110022 t_r0000110023
+theorem k_r000011002 : nChk 8 14 kAi kCi kL t_r000011002 768 800 32 64 = some 580169590442029665291862016 :=
+  nChk_node rfl rfl k_r0000110020 k_r0000110021 k_r0000110022 k_r0000110023 rfl
+
+def t_r000011003 : NTree := NTree.ofString "10000"
+theorem k_r000011003 : nChk 8 14 kAi kCi kL t_r000011003 800 832 32 64 = some 0 := by
+  decide +kernel
+
+def t_r00001100 : NTree := .node t_r000011000 t_r000011001 t_r000011002 t_r000011003
+theorem k_r00001100 : nChk 8 14 kAi kCi kL t_r00001100 768 832 0 64 = some 1172683455489473248306921472 :=
+  nChk_node rfl rfl k_r000011000 k_r000011001 k_r000011002 k_r000011003 rfl
+
+def t_r00001101 : NTree := NTree.ofString "10101000001000001010000010000"
+theorem k_r00001101 : nChk 8 14 kAi kCi kL t_r00001101 832 896 0 64 = some 0 := by
+  decide +kernel
+
+def t_r0000110200 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110200 : nChk 8 14 kAi kCi kL t_r0000110200 768 784 64 80 = some 271662851423329910024830976 := by
+  decide +kernel
+
+def t_r0000110201 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110201 : nChk 8 14 kAi kCi kL t_r0000110201 784 800 64 80 = some 10855168837872903096631296 := by
+  decide +kernel
+
+def t_r0000110202 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110202 : nChk 8 14 kAi kCi kL t_r0000110202 768 784 80 96 = some 286334430185292476264218624 := by
+  decide +kernel
+
+def t_r0000110203 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110203 : nChk 8 14 kAi kCi kL t_r0000110203 784 800 80 96 = some 10846546570285512715665408 := by
+  decide +kernel
+
+def t_r000011020 : NTree := .node t_r0000110200 t_r0000110201 t_r0000110202 t_r0000110203
+theorem k_r000011020 : nChk 8 14 kAi kCi kL t_r000011020 768 800 64 96 = some 579698997016780802101346304 :=
+  nChk_node rfl rfl k_r0000110200 k_r0000110201 k_r0000110202 k_r0000110203 rfl
+
+def t_r000011021 : NTree := NTree.ofString "10000"
+theorem k_r000011021 : nChk 8 14 kAi kCi kL t_r000011021 800 832 64 96 = some 0 := by
+  decide +kernel
+
+def t_r0000110220 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110220 : nChk 8 14 kAi kCi kL t_r0000110220 768 784 96 112 = some 299977945559975230823202816 := by
+  decide +kernel
+
+def t_r0000110221 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110221 : nChk 8 14 kAi kCi kL t_r0000110221 784 800 96 112 = some 10701203367684863221039104 := by
+  decide +kernel
+
+def t_r0000110222 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000110222 : nChk 8 14 kAi kCi kL t_r0000110222 768 784 112 128 = some 291380485728735722840522752 := by
+  decide +kernel
+
+def t_r0000110223 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000110223 : nChk 8 14 kAi kCi kL t_r0000110223 784 800 112 128 = some 10421394101339585727430656 := by
+  decide +kernel
+
+def t_r000011022 : NTree := .node t_r0000110220 t_r0000110221 t_r0000110222 t_r0000110223
+theorem k_r000011022 : nChk 8 14 kAi kCi kL t_r000011022 768 800 96 128 = some 612481028757735402612195328 :=
+  nChk_node rfl rfl k_r0000110220 k_r0000110221 k_r0000110222 k_r0000110223 rfl
+
+def t_r000011023 : NTree := NTree.ofString "10000"
+theorem k_r000011023 : nChk 8 14 kAi kCi kL t_r000011023 800 832 96 128 = some 0 := by
+  decide +kernel
+
+def t_r00001102 : NTree := .node t_r000011020 t_r000011021 t_r000011022 t_r000011023
+theorem k_r00001102 : nChk 8 14 kAi kCi kL t_r00001102 768 832 64 128 = some 1192180025774516204713541632 :=
+  nChk_node rfl rfl k_r000011020 k_r000011021 k_r000011022 k_r000011023 rfl
+
+def t_r00001103 : NTree := NTree.ofString "10101000000010000"
+theorem k_r00001103 : nChk 8 14 kAi kCi kL t_r00001103 832 896 64 128 = some 14763680987010757822513152 := by
+  decide +kernel
+
+def t_r0000110 : NTree := .node t_r00001100 t_r00001101 t_r00001102 t_r00001103
+theorem k_r0000110 : nChk 8 14 kAi kCi kL t_r0000110 768 896 0 128 = some 2379627162251000210842976256 :=
+  nChk_node rfl rfl k_r00001100 k_r00001101 k_r00001102 k_r00001103 rfl
+
+def t_r0000111000 : NTree := NTree.ofString "101000000"
+theorem k_r0000111000 : nChk 8 14 kAi kCi kL t_r0000111000 896 912 0 16 = some 45917001113097692736651264 := by
+  decide +kernel
+
+def t_r0000111001 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111001 : nChk 8 14 kAi kCi kL t_r0000111001 912 928 0 16 = some 54887786506296181150187520 := by
+  decide +kernel
+
+def t_r0000111002 : NTree := NTree.ofString "10000"
+theorem k_r0000111002 : nChk 8 14 kAi kCi kL t_r0000111002 896 912 16 32 = some 49695904783300801094221824 := by
+  decide +kernel
+
+def t_r0000111003 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111003 : nChk 8 14 kAi kCi kL t_r0000111003 912 928 16 32 = some 35190560620187958619668480 := by
+  decide +kernel
+
+def t_r000011100 : NTree := .node t_r0000111000 t_r0000111001 t_r0000111002 t_r0000111003
+theorem k_r000011100 : nChk 8 14 kAi kCi kL t_r000011100 896 928 0 32 = some 185691253022882633600729088 :=
+  nChk_node rfl rfl k_r0000111000 k_r0000111001 k_r0000111002 k_r0000111003 rfl
+
+def t_r0000111010 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111010 : nChk 8 14 kAi kCi kL t_r0000111010 928 944 0 16 = some 78656457142459154558877696 := by
+  decide +kernel
+
+def t_r0000111011 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000111011 : nChk 8 14 kAi kCi kL t_r0000111011 944 960 0 16 = some 60944075799855158123298816 := by
+  decide +kernel
+
+def t_r0000111012 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111012 : nChk 8 14 kAi kCi kL t_r0000111012 928 944 16 32 = some 56983856830351744897646592 := by
+  decide +kernel
+
+def t_r0000111013 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000111013 : nChk 8 14 kAi kCi kL t_r0000111013 944 960 16 32 = some 52600576309626601375531008 := by
+  decide +kernel
+
+def t_r000011101 : NTree := .node t_r0000111010 t_r0000111011 t_r0000111012 t_r0000111013
+theorem k_r000011101 : nChk 8 14 kAi kCi kL t_r000011101 928 960 0 32 = some 249184966082292658955354112 :=
+  nChk_node rfl rfl k_r0000111010 k_r0000111011 k_r0000111012 k_r0000111013 rfl
+
+def t_r0000111020 : NTree := NTree.ofString "10000"
+theorem k_r0000111020 : nChk 8 14 kAi kCi kL t_r0000111020 896 912 32 48 = some 30659434622599804703735808 := by
+  decide +kernel
+
+def t_r0000111021 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111021 : nChk 8 14 kAi kCi kL t_r0000111021 912 928 32 48 = some 19455538466960529256611840 := by
+  decide +kernel
+
+def t_r0000111022 : NTree := NTree.ofString "10000"
+theorem k_r0000111022 : nChk 8 14 kAi kCi kL t_r0000111022 896 912 48 64 = some 19561249152918987881840640 := by
+  decide +kernel
+
+def t_r0000111023 : NTree := NTree.ofString "1010000010000"
+theorem k_r0000111023 : nChk 8 14 kAi kCi kL t_r0000111023 912 928 48 64 = some 50475085700839482901659648 := by
+  decide +kernel
+
+def t_r000011102 : NTree := .node t_r0000111020 t_r0000111021 t_r0000111022 t_r0000111023
+theorem k_r000011102 : nChk 8 14 kAi kCi kL t_r000011102 896 928 32 64 = some 120151307943318804743847936 :=
+  nChk_node rfl rfl k_r0000111020 k_r0000111021 k_r0000111022 k_r0000111023 rfl
+
+def t_r0000111030 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111030 : nChk 8 14 kAi kCi kL t_r0000111030 928 944 32 48 = some 42574592842243393097564160 := by
+  decide +kernel
+
+def t_r0000111031 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000111031 : nChk 8 14 kAi kCi kL t_r0000111031 944 960 32 48 = some 43610197110032911772418048 := by
+  decide +kernel
+
+def t_r0000111032 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111032 : nChk 8 14 kAi kCi kL t_r0000111032 928 944 48 64 = some 28566341362545517576323072 := by
+  decide +kernel
+
+def t_r0000111033 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000111033 : nChk 8 14 kAi kCi kL t_r0000111033 944 960 48 64 = some 34800669742050074525958144 := by
+  decide +kernel
+
+def t_r000011103 : NTree := .node t_r0000111030 t_r0000111031 t_r0000111032 t_r0000111033
+theorem k_r000011103 : nChk 8 14 kAi kCi kL t_r000011103 928 960 32 64 = some 149551801056871896972263424 :=
+  nChk_node rfl rfl k_r0000111030 k_r0000111031 k_r0000111032 k_r0000111033 rfl
+
+def t_r00001110 : NTree := .node t_r000011100 t_r000011101 t_r000011102 t_r000011103
+theorem k_r00001110 : nChk 8 14 kAi kCi kL t_r00001110 896 960 0 64 = some 704579328105365994272194560 :=
+  nChk_node rfl rfl k_r000011100 k_r000011101 k_r000011102 k_r000011103 rfl
+
+def t_r0000111100 : NTree := NTree.ofString "1010000010000"
+theorem k_r0000111100 : nChk 8 14 kAi kCi kL t_r0000111100 960 976 0 16 = some 89366805179525584442621952 := by
+  decide +kernel
+
+def t_r0000111101 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111101 : nChk 8 14 kAi kCi kL t_r0000111101 976 992 0 16 = some 230793911915984145015111680 := by
+  decide +kernel
+
+def t_r0000111102 : NTree := NTree.ofString "1010000010000"
+theorem k_r0000111102 : nChk 8 14 kAi kCi kL t_r0000111102 960 976 16 32 = some 59831654338034922581655552 := by
+  decide +kernel
+
+def t_r0000111103 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111103 : nChk 8 14 kAi kCi kL t_r0000111103 976 992 16 32 = some 214148120212471431888371712 := by
+  decide +kernel
+
+def t_r000011110 : NTree := .node t_r0000111100 t_r0000111101 t_r0000111102 t_r0000111103
+theorem k_r000011110 : nChk 8 14 kAi kCi kL t_r000011110 960 992 0 32 = some 594140491646016083927760896 :=
+  nChk_node rfl rfl k_r0000111100 k_r0000111101 k_r0000111102 k_r0000111103 rfl
+
+def t_r0000111110 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111110 : nChk 8 14 kAi kCi kL t_r0000111110 992 1008 0 16 = some 278175783379134059047288832 := by
+  decide +kernel
+
+def t_r0000111111 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111111 : nChk 8 14 kAi kCi kL t_r0000111111 1008 1024 0 16 = some 315712481801785517910523904 := by
+  decide +kernel
+
+def t_r0000111112 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111112 : nChk 8 14 kAi kCi kL t_r0000111112 992 1008 16 32 = some 245090368211523153715789824 := by
+  decide +kernel
+
+def t_r0000111113 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111113 : nChk 8 14 kAi kCi kL t_r0000111113 1008 1024 16 32 = some 288713674769303594709549056 := by
+  decide +kernel
+
+def t_r000011111 : NTree := .node t_r0000111110 t_r0000111111 t_r0000111112 t_r0000111113
+theorem k_r000011111 : nChk 8 14 kAi kCi kL t_r000011111 992 1024 0 32 = some 1127692308161746325383151616 :=
+  nChk_node rfl rfl k_r0000111110 k_r0000111111 k_r0000111112 k_r0000111113 rfl
+
+def t_r0000111120 : NTree := NTree.ofString "1010000010000"
+theorem k_r0000111120 : nChk 8 14 kAi kCi kL t_r0000111120 960 976 32 48 = some 32960274560469454634876928 := by
+  decide +kernel
+
+def t_r0000111121 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111121 : nChk 8 14 kAi kCi kL t_r0000111121 976 992 32 48 = some 181381762838137650303467520 := by
+  decide +kernel
+
+def t_r0000111122 : NTree := NTree.ofString "101000000"
+theorem k_r0000111122 : nChk 8 14 kAi kCi kL t_r0000111122 960 976 48 64 = some 33641560836490775400284160 := by
+  decide +kernel
+
+def t_r0000111123 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111123 : nChk 8 14 kAi kCi kL t_r0000111123 976 992 48 64 = some 140677387476027169050722304 := by
+  decide +kernel
+
+def t_r000011112 : NTree := .node t_r0000111120 t_r0000111121 t_r0000111122 t_r0000111123
+theorem k_r000011112 : nChk 8 14 kAi kCi kL t_r000011112 960 992 32 64 = some 388660985711125049389350912 :=
+  nChk_node rfl rfl k_r0000111120 k_r0000111121 k_r0000111122 k_r0000111123 rfl
+
+def t_r0000111130 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111130 : nChk 8 14 kAi kCi kL t_r0000111130 992 1008 32 48 = some 233563837901658915168321536 := by
+  decide +kernel
+
+def t_r0000111131 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111131 : nChk 8 14 kAi kCi kL t_r0000111131 1008 1024 32 48 = some 260869150915924263016857600 := by
+  decide +kernel
+
+def t_r0000111132 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111132 : nChk 8 14 kAi kCi kL t_r0000111132 992 1008 48 64 = some 228484584510661414594019328 := by
+  decide +kernel
+
+def t_r0000111133 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111133 : nChk 8 14 kAi kCi kL t_r0000111133 1008 1024 48 64 = some 232168229239626667625807872 := by
+  decide +kernel
+
+def t_r000011113 : NTree := .node t_r0000111130 t_r0000111131 t_r0000111132 t_r0000111133
+theorem k_r000011113 : nChk 8 14 kAi kCi kL t_r000011113 992 1024 32 64 = some 955085802567871260405006336 :=
+  nChk_node rfl rfl k_r0000111130 k_r0000111131 k_r0000111132 k_r0000111133 rfl
+
+def t_r00001111 : NTree := .node t_r000011110 t_r000011111 t_r000011112 t_r000011113
+theorem k_r00001111 : nChk 8 14 kAi kCi kL t_r00001111 960 1024 0 64 = some 3065579588086758719105269760 :=
+  nChk_node rfl rfl k_r000011110 k_r000011111 k_r000011112 k_r000011113 rfl
+
+def t_r000011120 : NTree := NTree.ofString "1100001010000001000010000"
+theorem k_r000011120 : nChk 8 14 kAi kCi kL t_r000011120 896 928 64 96 = some 130624476723011334375997440 := by
+  decide +kernel
+
+def t_r0000111210 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111210 : nChk 8 14 kAi kCi kL t_r0000111210 928 944 64 80 = some 14036727481184760593645568 := by
+  decide +kernel
+
+def t_r0000111211 : NTree := NTree.ofString "10000"
+theorem k_r0000111211 : nChk 8 14 kAi kCi kL t_r0000111211 944 960 64 80 = some 73256256640380547570335744 := by
+  decide +kernel
+
+def t_r0000111212 : NTree := NTree.ofString "1100001000000"
+theorem k_r0000111212 : nChk 8 14 kAi kCi kL t_r0000111212 928 944 80 96 = some 48402832192787106962079744 := by
+  decide +kernel
+
+def t_r0000111213 : NTree := NTree.ofString "10000"
+theorem k_r0000111213 : nChk 8 14 kAi kCi kL t_r0000111213 944 960 80 96 = some 62438312863674029102333952 := by
+  decide +kernel
+
+def t_r000011121 : NTree := .node t_r0000111210 t_r0000111211 t_r0000111212 t_r0000111213
+theorem k_r000011121 : nChk 8 14 kAi kCi kL t_r000011121 928 960 64 96 = some 198134129178026444228395008 :=
+  nChk_node rfl rfl k_r0000111210 k_r0000111211 k_r0000111212 k_r0000111213 rfl
+
+def t_r000011122 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011122 : nChk 8 14 kAi kCi kL t_r000011122 896 928 96 128 = some 69070549591502701687996416 := by
+  decide +kernel
+
+def t_r000011123 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011123 : nChk 8 14 kAi kCi kL t_r000011123 928 960 96 128 = some 238458218563233728295862272 := by
+  decide +kernel
+
+def t_r00001112 : NTree := .node t_r000011120 t_r000011121 t_r000011122 t_r000011123
+theorem k_r00001112 : nChk 8 14 kAi kCi kL t_r00001112 896 960 64 128 = some 636287374055774208588251136 :=
+  nChk_node rfl rfl k_r000011120 k_r000011121 k_r000011122 k_r000011123 rfl
+
+def t_r0000111300 : NTree := NTree.ofString "10000"
+theorem k_r0000111300 : nChk 8 14 kAi kCi kL t_r0000111300 960 976 64 80 = some 37657943919975748998266880 := by
+  decide +kernel
+
+def t_r0000111301 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111301 : nChk 8 14 kAi kCi kL t_r0000111301 976 992 64 80 = some 103129883035129416580595712 := by
+  decide +kernel
+
+def t_r0000111302 : NTree := NTree.ofString "10000"
+theorem k_r0000111302 : nChk 8 14 kAi kCi kL t_r0000111302 960 976 80 96 = some 25231444960761683103449088 := by
+  decide +kernel
+
+def t_r0000111303 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111303 : nChk 8 14 kAi kCi kL t_r0000111303 976 992 80 96 = some 68668778012634031180480512 := by
+  decide +kernel
+
+def t_r000011130 : NTree := .node t_r0000111300 t_r0000111301 t_r0000111302 t_r0000111303
+theorem k_r000011130 : nChk 8 14 kAi kCi kL t_r000011130 960 992 64 96 = some 234688049928500879862792192 :=
+  nChk_node rfl rfl k_r0000111300 k_r0000111301 k_r0000111302 k_r0000111303 rfl
+
+def t_r0000111310 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111310 : nChk 8 14 kAi kCi kL t_r0000111310 992 1008 64 80 = some 236839644982626093700743168 := by
+  decide +kernel
+
+def t_r0000111311 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111311 : nChk 8 14 kAi kCi kL t_r0000111311 1008 1024 64 80 = some 202603860602725272947523584 := by
+  decide +kernel
+
+def t_r0000111312 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111312 : nChk 8 14 kAi kCi kL t_r0000111312 992 1008 80 96 = some 222282615182945953115013120 := by
+  decide +kernel
+
+def t_r0000111313 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111313 : nChk 8 14 kAi kCi kL t_r0000111313 1008 1024 80 96 = some 221941744404196667307327488 := by
+  decide +kernel
+
+def t_r000011131 : NTree := .node t_r0000111310 t_r0000111311 t_r0000111312 t_r0000111313
+theorem k_r000011131 : nChk 8 14 kAi kCi kL t_r000011131 992 1024 64 96 = some 883667865172493987070607360 :=
+  nChk_node rfl rfl k_r0000111310 k_r0000111311 k_r0000111312 k_r0000111313 rfl
+
+def t_r000011132 : NTree := NTree.ofString "11000011000010000010000100001010000010000"
+theorem k_r000011132 : nChk 8 14 kAi kCi kL t_r000011132 960 992 96 128 = some 133411530232863292976529408 := by
+  decide +kernel
+
+def t_r0000111330 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111330 : nChk 8 14 kAi kCi kL t_r0000111330 992 1008 96 112 = some 185102162047021439495700480 := by
+  decide +kernel
+
+def t_r0000111331 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111331 : nChk 8 14 kAi kCi kL t_r0000111331 1008 1024 96 112 = some 254513173292728817603837952 := by
+  decide +kernel
+
+def t_r0000111332 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111332 : nChk 8 14 kAi kCi kL t_r0000111332 992 1008 112 128 = some 146904878128037682110005248 := by
+  decide +kernel
+
+def t_r0000111333 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000111333 : nChk 8 14 kAi kCi kL t_r0000111333 1008 1024 112 128 = some 222768723242344391934738432 := by
+  decide +kernel
+
+def t_r000011133 : NTree := .node t_r0000111330 t_r0000111331 t_r0000111332 t_r0000111333
+theorem k_r000011133 : nChk 8 14 kAi kCi kL t_r000011133 992 1024 96 128 = some 809288936710132331144282112 :=
+  nChk_node rfl rfl k_r0000111330 k_r0000111331 k_r0000111332 k_r0000111333 rfl
+
+def t_r00001113 : NTree := .node t_r000011130 t_r000011131 t_r000011132 t_r000011133
+theorem k_r00001113 : nChk 8 14 kAi kCi kL t_r00001113 960 1024 64 128 = some 2061056382043990491054211072 :=
+  nChk_node rfl rfl k_r000011130 k_r000011131 k_r000011132 k_r000011133 rfl
+
+def t_r0000111 : NTree := .node t_r00001110 t_r00001111 t_r00001112 t_r00001113
+theorem k_r0000111 : nChk 8 14 kAi kCi kL t_r0000111 896 1024 0 128 = some 6467502672291889413019926528 :=
+  nChk_node rfl rfl k_r00001110 k_r00001111 k_r00001112 k_r00001113 rfl
+
+def t_r0000112000 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112000 : nChk 8 14 kAi kCi kL t_r0000112000 768 784 128 144 = some 281804797490323855872360448 := by
+  decide +kernel
+
+def t_r0000112001 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112001 : nChk 8 14 kAi kCi kL t_r0000112001 784 800 128 144 = some 10008998934022114869510144 := by
+  decide +kernel
+
+def t_r0000112002 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112002 : nChk 8 14 kAi kCi kL t_r0000112002 768 784 144 160 = some 271253596202593675401756672 := by
+  decide +kernel
+
+def t_r0000112003 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112003 : nChk 8 14 kAi kCi kL t_r0000112003 784 800 144 160 = some 9465781511375325952475136 := by
+  decide +kernel
+
+def t_r000011200 : NTree := .node t_r0000112000 t_r0000112001 t_r0000112002 t_r0000112003
+theorem k_r000011200 : nChk 8 14 kAi kCi kL t_r000011200 768 800 128 160 = some 572533174138314972096102400 :=
+  nChk_node rfl rfl k_r0000112000 k_r0000112001 k_r0000112002 k_r0000112003 rfl
+
+def t_r000011201 : NTree := NTree.ofString "10000"
+theorem k_r000011201 : nChk 8 14 kAi kCi kL t_r000011201 800 832 128 160 = some 0 := by
+  decide +kernel
+
+def t_r0000112020 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112020 : nChk 8 14 kAi kCi kL t_r0000112020 768 784 160 176 = some 259730083129161340367667200 := by
+  decide +kernel
+
+def t_r0000112021 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112021 : nChk 8 14 kAi kCi kL t_r0000112021 784 800 160 176 = some 8793329379289464840388608 := by
+  decide +kernel
+
+def t_r0000112022 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112022 : nChk 8 14 kAi kCi kL t_r0000112022 768 784 176 192 = some 247236284619816998587596800 := by
+  decide +kernel
+
+def t_r0000112023 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112023 : nChk 8 14 kAi kCi kL t_r0000112023 784 800 176 192 = some 7993004993745401419923456 := by
+  decide +kernel
+
+def t_r000011202 : NTree := .node t_r0000112020 t_r0000112021 t_r0000112022 t_r0000112023
+theorem k_r000011202 : nChk 8 14 kAi kCi kL t_r000011202 768 800 160 192 = some 523752702122013205215576064 :=
+  nChk_node rfl rfl k_r0000112020 k_r0000112021 k_r0000112022 k_r0000112023 rfl
+
+def t_r000011203 : NTree := NTree.ofString "10000"
+theorem k_r000011203 : nChk 8 14 kAi kCi kL t_r000011203 800 832 160 192 = some 0 := by
+  decide +kernel
+
+def t_r00001120 : NTree := .node t_r000011200 t_r000011201 t_r000011202 t_r000011203
+theorem k_r00001120 : nChk 8 14 kAi kCi kL t_r00001120 768 832 128 192 = some 1096285876260328177311678464 :=
+  nChk_node rfl rfl k_r000011200 k_r000011201 k_r000011202 k_r000011203 rfl
+
+def t_r00001121 : NTree := NTree.ofString "1010000010000"
+theorem k_r00001121 : nChk 8 14 kAi kCi kL t_r00001121 832 896 128 192 = some 0 := by
+  decide +kernel
+
+def t_r0000112200 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112200 : nChk 8 14 kAi kCi kL t_r0000112200 768 784 192 208 = some 233771702632646509294780416 := by
+  decide +kernel
+
+def t_r0000112201 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112201 : nChk 8 14 kAi kCi kL t_r0000112201 784 800 192 208 = some 7065907323124206639513600 := by
+  decide +kernel
+
+def t_r0000112202 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112202 : nChk 8 14 kAi kCi kL t_r0000112202 768 784 208 224 = some 261564577178577044024328192 := by
+  decide +kernel
+
+def t_r0000112203 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112203 : nChk 8 14 kAi kCi kL t_r0000112203 784 800 208 224 = some 6013049272018072397414400 := by
+  decide +kernel
+
+def t_r000011220 : NTree := .node t_r0000112200 t_r0000112201 t_r0000112202 t_r0000112203
+theorem k_r000011220 : nChk 8 14 kAi kCi kL t_r000011220 768 800 192 224 = some 508415236406365832356036608 :=
+  nChk_node rfl rfl k_r0000112200 k_r0000112201 k_r0000112202 k_r0000112203 rfl
+
+def t_r000011221 : NTree := NTree.ofString "10000"
+theorem k_r000011221 : nChk 8 14 kAi kCi kL t_r000011221 800 832 192 224 = some 0 := by
+  decide +kernel
+
+def t_r0000112220 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112220 : nChk 8 14 kAi kCi kL t_r0000112220 768 784 224 240 = some 246236750230702732301303808 := by
+  decide +kernel
+
+def t_r0000112221 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112221 : nChk 8 14 kAi kCi kL t_r0000112221 784 800 224 240 = some 4835186877710843888271360 := by
+  decide +kernel
+
+def t_r0000112222 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000112222 : nChk 8 14 kAi kCi kL t_r0000112222 768 784 240 256 = some 229941906234283169937358848 := by
+  decide +kernel
+
+def t_r0000112223 : NTree := NTree.ofString "1100000100000"
+theorem k_r0000112223 : nChk 8 14 kAi kCi kL t_r0000112223 784 800 240 256 = some 3533021891096457982771200 := by
+  decide +kernel
+
+def t_r000011222 : NTree := .node t_r0000112220 t_r0000112221 t_r0000112222 t_r0000112223
+theorem k_r000011222 : nChk 8 14 kAi kCi kL t_r000011222 768 800 224 256 = some 484546865233793204109705216 :=
+  nChk_node rfl rfl k_r0000112220 k_r0000112221 k_r0000112222 k_r0000112223 rfl
+
+def t_r000011223 : NTree := NTree.ofString "10000"
+theorem k_r000011223 : nChk 8 14 kAi kCi kL t_r000011223 800 832 224 256 = some 0 := by
+  decide +kernel
+
+def t_r00001122 : NTree := .node t_r000011220 t_r000011221 t_r000011222 t_r000011223
+theorem k_r00001122 : nChk 8 14 kAi kCi kL t_r00001122 768 832 192 256 = some 992962101640159036465741824 :=
+  nChk_node rfl rfl k_r000011220 k_r000011221 k_r000011222 k_r000011223 rfl
+
+def t_r00001123 : NTree := NTree.ofString "1010000010000"
+theorem k_r00001123 : nChk 8 14 kAi kCi kL t_r00001123 832 896 192 256 = some 0 := by
+  decide +kernel
+
+def t_r0000112 : NTree := .node t_r00001120 t_r00001121 t_r00001122 t_r00001123
+theorem k_r0000112 : nChk 8 14 kAi kCi kL t_r0000112 768 896 128 256 = some 2089247977900487213777420288 :=
+  nChk_node rfl rfl k_r00001120 k_r00001121 k_r00001122 k_r00001123 rfl
+
+def t_r000011300 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011300 : nChk 8 14 kAi kCi kL t_r000011300 896 928 128 160 = some 14453350150450846371938304 := by
+  decide +kernel
+
+def t_r000011301 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011301 : nChk 8 14 kAi kCi kL t_r000011301 928 960 128 160 = some 123979623415279962292224000 := by
+  decide +kernel
+
+def t_r000011302 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011302 : nChk 8 14 kAi kCi kL t_r000011302 896 928 160 192 = some 0 := by
+  decide +kernel
+
+def t_r000011303 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011303 : nChk 8 14 kAi kCi kL t_r000011303 928 960 160 192 = some 24659989725256901298487296 := by
+  decide +kernel
+
+def t_r00001130 : NTree := .node t_r000011300 t_r000011301 t_r000011302 t_r000011303
+theorem k_r00001130 : nChk 8 14 kAi kCi kL t_r00001130 896 960 128 192 = some 163092963290987709962649600 :=
+  nChk_node rfl rfl k_r000011300 k_r000011301 k_r000011302 k_r000011303 rfl
+
+def t_r000011310 : NTree := NTree.ofString "11000010100000100001000010000"
+theorem k_r000011310 : nChk 8 14 kAi kCi kL t_r000011310 960 992 128 160 = some 90188566791619723785142272 := by
+  decide +kernel
+
+def t_r0000113110 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113110 : nChk 8 14 kAi kCi kL t_r0000113110 992 1008 128 144 = some 108453641375932676353032192 := by
+  decide +kernel
+
+def t_r0000113111 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113111 : nChk 8 14 kAi kCi kL t_r0000113111 1008 1024 128 144 = some 190139823303766078144905216 := by
+  decide +kernel
+
+def t_r0000113112 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113112 : nChk 8 14 kAi kCi kL t_r0000113112 992 1008 144 160 = some 73824336864813779043483648 := by
+  decide +kernel
+
+def t_r0000113113 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113113 : nChk 8 14 kAi kCi kL t_r0000113113 1008 1024 144 160 = some 156608143950359468068306944 := by
+  decide +kernel
+
+def t_r000011311 : NTree := .node t_r0000113110 t_r0000113111 t_r0000113112 t_r0000113113
+theorem k_r000011311 : nChk 8 14 kAi kCi kL t_r000011311 992 1024 128 160 = some 529025945494872001609728000 :=
+  nChk_node rfl rfl k_r0000113110 k_r0000113111 k_r0000113112 k_r0000113113 rfl
+
+def t_r000011312 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011312 : nChk 8 14 kAi kCi kL t_r000011312 960 992 160 192 = some 53427323163313859979116544 := by
+  decide +kernel
+
+def t_r0000113130 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113130 : nChk 8 14 kAi kCi kL t_r0000113130 992 1008 160 176 = some 43972030530967080284454912 := by
+  decide +kernel
+
+def t_r0000113131 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113131 : nChk 8 14 kAi kCi kL t_r0000113131 1008 1024 160 176 = some 122152399263011166549442560 := by
+  decide +kernel
+
+def t_r0000113132 : NTree := NTree.ofString "1010000010000"
+theorem k_r0000113132 : nChk 8 14 kAi kCi kL t_r0000113132 992 1008 176 192 = some 64964659424489577388179456 := by
+  decide +kernel
+
+def t_r0000113133 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113133 : nChk 8 14 kAi kCi kL t_r0000113133 1008 1024 176 192 = some 86926429047968810944954368 := by
+  decide +kernel
+
+def t_r000011313 : NTree := .node t_r0000113130 t_r0000113131 t_r0000113132 t_r0000113133
+theorem k_r000011313 : nChk 8 14 kAi kCi kL t_r000011313 992 1024 160 192 = some 318015518266436635167031296 :=
+  nChk_node rfl rfl k_r0000113130 k_r0000113131 k_r0000113132 k_r0000113133 rfl
+
+def t_r00001131 : NTree := .node t_r000011310 t_r000011311 t_r000011312 t_r000011313
+theorem k_r00001131 : nChk 8 14 kAi kCi kL t_r00001131 960 1024 128 192 = some 990657353716242220541018112 :=
+  nChk_node rfl rfl k_r000011310 k_r000011311 k_r000011312 k_r000011313 rfl
+
+def t_r000011320 : NTree := NTree.ofString "1010000010000"
+theorem k_r000011320 : nChk 8 14 kAi kCi kL t_r000011320 896 928 192 224 = some 5880619096513794250113024 := by
+  decide +kernel
+
+def t_r000011321 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011321 : nChk 8 14 kAi kCi kL t_r000011321 928 960 192 224 = some 0 := by
+  decide +kernel
+
+def t_r000011322 : NTree := NTree.ofString "1010000010000"
+theorem k_r000011322 : nChk 8 14 kAi kCi kL t_r000011322 896 928 224 256 = some 0 := by
+  decide +kernel
+
+def t_r000011323 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011323 : nChk 8 14 kAi kCi kL t_r000011323 928 960 224 256 = some 0 := by
+  decide +kernel
+
+def t_r00001132 : NTree := .node t_r000011320 t_r000011321 t_r000011322 t_r000011323
+theorem k_r00001132 : nChk 8 14 kAi kCi kL t_r00001132 896 960 192 256 = some 5880619096513794250113024 :=
+  nChk_node rfl rfl k_r000011320 k_r000011321 k_r000011322 k_r000011323 rfl
+
+def t_r000011330 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011330 : nChk 8 14 kAi kCi kL t_r000011330 960 992 192 224 = some 7676291385577602860187648 := by
+  decide +kernel
+
+def t_r0000113310 : NTree := NTree.ofString "1010000010000"
+theorem k_r0000113310 : nChk 8 14 kAi kCi kL t_r0000113310 992 1008 192 208 = some 43401142809813942131490816 := by
+  decide +kernel
+
+def t_r0000113311 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113311 : nChk 8 14 kAi kCi kL t_r0000113311 1008 1024 192 208 = some 55688096320443650213412864 := by
+  decide +kernel
+
+def t_r0000113312 : NTree := NTree.ofString "10000"
+theorem k_r0000113312 : nChk 8 14 kAi kCi kL t_r0000113312 992 1008 208 224 = some 66658916630725307576352768 := by
+  decide +kernel
+
+def t_r0000113313 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r0000113313 : nChk 8 14 kAi kCi kL t_r0000113313 1008 1024 208 224 = some 35557292962221188582473728 := by
+  decide +kernel
+
+def t_r000011331 : NTree := .node t_r0000113310 t_r0000113311 t_r0000113312 t_r0000113313
+theorem k_r000011331 : nChk 8 14 kAi kCi kL t_r000011331 992 1024 192 224 = some 201305448723204088503730176 :=
+  nChk_node rfl rfl k_r0000113310 k_r0000113311 k_r0000113312 k_r0000113313 rfl
+
+def t_r000011332 : NTree := NTree.ofString "110000100001000010000"
+theorem k_r000011332 : nChk 8 14 kAi kCi kL t_r000011332 960 992 224 256 = some 0 := by
+  decide +kernel
+
+def t_r000011333 : NTree := NTree.ofString "1100001100001000001000010000101000000"
+theorem k_r000011333 : nChk 8 14 kAi kCi kL t_r000011333 992 1024 224 256 = some 181232530457503192842240000 := by
+  decide +kernel
+
+def t_r00001133 : NTree := .node t_r000011330 t_r000011331 t_r000011332 t_r000011333
+theorem k_r00001133 : nChk 8 14 kAi kCi kL t_r00001133 960 1024 192 256 = some 390214270566284884206157824 :=
+  nChk_node rfl rfl k_r000011330 k_r000011331 k_r000011332 k_r000011333 rfl
+
+def t_r0000113 : NTree := .node t_r00001130 t_r00001131 t_r00001132 t_r00001133
+theorem k_r0000113 : nChk 8 14 kAi kCi kL t_r0000113 896 1024 128 256 = some 1549845206670028608959938560 :=
+  nChk_node rfl rfl k_r00001130 k_r00001131 k_r00001132 k_r00001133 rfl
+
+def t_r000011 : NTree := .node t_r0000110 t_r0000111 t_r0000112 t_r0000113
+theorem k_r000011 : nChk 8 14 kAi kCi kL t_r000011 768 1024 0 256 = some 12486223019113405446600261632 :=
+  nChk_node rfl rfl k_r0000110 k_r0000111 k_r0000112 k_r0000113 rfl
+
+end ChargeKernel.Pt900

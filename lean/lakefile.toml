@@ -1,0 +1,16 @@
+name = "charge_kernel"
+version = "1.0.0"
+defaultTargets = ["ChargeKernel"]
+
+[leanOptions]
+autoImplicit = false
+
+# Yongxi Lin's formalization (Apache 2.0): the definition of the weak type constant, the Cauchy
+# generator and its potential theory. Pinned to the commit this work was developed against.
+[[require]]
+name = "centered_maximal_constant"
+git = "https://github.com/CoolRmal/centered-maximal-constant.git"
+rev = "72c022ba09032b522c878cca2f9b6c68217d77ea"
+
+[[lean_lib]]
+name = "ChargeKernel"
