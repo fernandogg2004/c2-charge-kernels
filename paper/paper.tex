@@ -1,0 +1,324 @@
+\documentclass[11pt]{amsart}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[margin=1.15in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\lean}[1]{\texttt{#1}}
+\newcommand{\dd}{\,\mathrm{d}}
+
+\title[A kernel-checked bound for the planar centred maximal constant]{Charge kernels and a kernel-checked
+bound $c_2 \le 3.7265$ for the centred maximal operator over squares}
+\author{Fernando}
+\date{November 2026}
+
+\begin{document}
+
+\begin{abstract}
+Let $c_2$ be the weak type $(1,1)$ constant of the centred Hardy--Littlewood maximal operator
+over axis-parallel squares in the plane. Using Lin's comparison principle for the Cauchy
+generator, we introduce \emph{charge kernels}: positive parts of $a/(|u|+|v|) - \sum_j b_j /
+(|u-p_j|+|v-q_j|) - c$, whose admissibility follows from the fact that $1/(|u|+|v|)$ is a
+fundamental solution of the generator, together with Kato's inequality. An $820$-charge kernel
+found by linear programming, with an exact quadtree certificate of $631{,}342$ cells, gives
+\[ c_2 \le 3.7265 . \]
+The whole argument, analytic and computational, is formalized in Lean~4 with Mathlib, and is
+checked by Lean's kernel alone: the proof uses only the standard axioms and no
+\lean{native\_decide}. To make the certificate feasible for the kernel we evaluate it with a
+natural-number checker that we prove computes \emph{exactly} the values of the rational one. Better
+upper bounds for $c_2$, $3.615749$ (Lin, unpublished) and $3.59123$ (Tomar, computer-assisted
+with interval arithmetic), obtained with fractional generators, are known; to our knowledge the
+bound here is the strongest one verified in a proof assistant.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+For $f \in L^1(\R^d)$ let
+\[ Mf(x) = \sup_{r>0} \frac{1}{|Q(x,r)|} \int_{Q(x,r)} |f|, \qquad Q(x,r) = \prod_{i=1}^d [x_i - r, x_i + r], \]
+be the centred maximal function over cubes, and let $c_d$ be the least constant with
+\[ \alpha\, \bigl|\{ x : Mf(x) > \alpha \}\bigr| \le c_d \, \|f\|_1 \qquad (f \in L^1(\R^d),\ \alpha > 0). \]
+Melas determined $c_1 = (11+\sqrt{61})/12 \approx 1.5675$ \cite{Melas}; no best constant is known in
+higher dimension, and Aldaz proved $c_d \to \infty$ \cite{Aldaz11}. In the plane, a covering
+argument gives $c_2 \le 4$, and Aldaz gave $c_2 \ge 1.6211$ \cite{Aldaz00}. In 2026 Lin proved
+$1.6855 \le c_2 \le 3.879$, both formalized in Lean~4 \cite{LinRepo}; these are the values recorded in
+the list of optimization constants maintained by Tao and others \cite{TaoList}. Lin also reports an
+unpublished bound $c_2 < 3.615749$, from a fractional generator of order $6/5$
+\cite{LinRepo}, and Tomar obtained $1.7027 \le c_2 \le 3.59123$ \cite{Tomar}: the lower bound is
+formalized in Lean; the upper bound, also from a fractional generator, is a computer-assisted proof
+checked with interval arithmetic.
+
+This note contributes the following.
+\begin{enumerate}[leftmargin=2em]
+\item A family of comparison kernels for Lin's method with the Cauchy generator, \emph{charge
+  kernels} (Section~\ref{sec:charges}), whose admissibility is automatic: it reduces to two
+  explicit inequalities for an elementary function.
+\item The bound $c_2 \le 7453/2000 = 3.7265$ (Theorem~\ref{thm:main}).
+\item A complete formalization in Lean~4 \cite{Lean4} with Mathlib \cite{Mathlib}, building on
+  Lin's \cite{LinRepo}, which is checked by the kernel alone. Every number in the certificate is
+  recomputed by the kernel; nothing relies on the compiler (\lean{native\_decide}).
+\item A technique that makes such certificates cheap for the kernel: an \emph{exact}
+  natural-number refinement of a rational checker (Section~\ref{sec:nat}).
+\end{enumerate}
+As a numerical value $3.7265$ is weaker than the bounds of \cite{LinRepo,Tomar}. For the Cauchy
+generator the method itself cannot reach them: a direct discretization of the optimization
+problem suggests that the best kernel in this setting gives about $3.64$ (Section~\ref{sec:limits}).
+
+\section{The comparison principle}
+
+Write points of $\R^2$ as $z = (u,v)$, let $r(z) = |u| + |v|$, and let
+$D = \{ r \le 1 \}$ be the closed unit diamond. The linear map $(u,v) \mapsto (u+v, u-v)$ maps
+diamonds onto squares, so $c_2$ is also the weak type constant of the centred maximal operator over
+dilates of $D$. Let $A$ be the sum of the two one-dimensional Cauchy jump generators,
+\[ A\varphi(z) = \sum_{j=1}^{2} \int_{\R} \bigl( \varphi(z + t e_j) + \varphi(z - t e_j) - 2\varphi(z) \bigr)\, \frac{\dd t}{t^2}, \]
+which is $-2\pi(|D_u| + |D_v|)$ in Fourier terms. The following form of Lin's comparison principle
+is the one we formalized (\lean{weakTypeConstant\_two\_le\_half\_integral\_of\_pos}); Lin proved it
+for one particular kernel, and the proof uses only the stated properties.
+
+\begin{theorem}[comparison principle]\label{thm:comparison}
+Let $K : \R^2 \to [0,\infty)$ be even, integrable, compactly supported, with $K \ge 1$ on $D$, and
+suppose that for some $a \ge 0$
+\[ \int K\, A\varphi \;\ge\; -a\,\varphi(0) \qquad \text{for every test function } \varphi \ge 0, \]
+that is, $AK + a\delta_0 \ge 0$ as a distribution. Then $c_2 \le \frac12 \int K$.
+\end{theorem}
+
+The proof solves an obstacle problem $Au = \sigma - f$ with $0 \le \sigma \le \kappa$ and
+$\sigma = \kappa$ on $\{u > 0\}$, so that $|\{u>0\}| \le \|f\|_1/\kappa$; off this set, pairing with
+the dilates of $K$ and using $AK + a\delta_0 \ge 0$ and $u \ge 0$ bounds the averages of $f$ over
+diamonds. Lin's argument assumed an exact identity $AK = \beta - a\delta_0$ with a finite positive
+measure $\beta$. We only assume the inequality, which is what Kato's inequality delivers below; the
+transfer step goes through with an inequality in place of the identity (\lean{Transfer.lean}).
+
+\section{Charge kernels}\label{sec:charges}
+
+Let $G(z) = 1/r(z)$. Since $\widehat{G}(\xi,\eta)$ is a multiple of $1/(|\xi|+|\eta|) =
+\int_0^\infty e^{-t|\xi|} e^{-t|\eta|} \dd t$, $G$ is $2\pi$ times the potential of the semigroup
+generated by $A$: in Lin's formalization, $\frac{1}{2\pi}\int G\, A\varphi = -\varphi(0)$ for every
+test function, that is, $AG = -2\pi \delta_0$.
+
+\begin{definition}
+Let $a \ge 0$, $c > 0$, $m > 0$, and let $b_1, \dots, b_n \ge 0$ be charges at points $p_1, \dots, p_n$.
+Put
+\[ \psi(z) = \frac{a}{r(z)} - \sum_{j=1}^n \frac{b_j}{r(z - p_j)} - c, \qquad K = \frac{\psi_+}{m} . \]
+\end{definition}
+
+Formally $A\psi = -2\pi a\delta_0 + 2\pi \sum_j b_j \delta_{p_j}$: the charges contribute positive
+point masses, and the charges sit where $\psi = -\infty$, so they do not meet $\{\psi > 0\}$.
+Kato's inequality $A\psi_+ \ge \mathbf 1_{\{\psi>0\}} A\psi$ then suggests
+$AK \ge -(2\pi a/m)\,\delta_0$. We prove the needed statement directly with the semigroup.
+
+\begin{proposition}[Kato's inequality for charge kernels]\label{prop:kato}
+For every test function $\varphi \ge 0$,
+$\int K\, A\varphi \ge -\frac{4\pi^2 a}{m}\, \varphi(0)$.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Let $P_h F = p_h * F$ be the Cauchy semigroup, with $p_h(z)$ the product of two one-dimensional
+Cauchy densities of scale $h$. The semigroup property $p_h * p_s = p_{h+s}$ (via the Fourier
+transform) shows that the potential is excessive:
+$P_h G = G - \int_0^h p_t \dd t \le G$ away from the origin. At a point where $\psi > 0$, since
+$K \ge \psi/m$ and $P_h$ preserves order,
+$P_h K - K \ge (P_h \psi - \psi)/m \ge -(a/m) \int_0^h p_t \dd t$ (each charge term only helps); at a
+point where $\psi \le 0$, $P_h K - K \ge 0$. Integrating against $\varphi$, dividing by $h$ and using
+Duhamel's formula $P_h\varphi - \varphi = \int_0^h \frac{1}{2\pi} P_s(A\varphi)\dd s$ gives the claim as
+$h \to 0^+$.
+\end{proof}
+
+The remaining hypotheses of Theorem~\ref{thm:comparison} are elementary: $K \ge 0$; $K$ is even if
+the configuration is symmetric under $z \mapsto -z$; $K$ has compact support, since $\psi \le a/r - c
+\le 0$ for $r \ge a/c$; and $K \ge 1$ on $D$ as soon as $\psi \ge m$ there. Hence:
+
+\begin{theorem}\label{thm:charge}
+If the charge configuration is symmetric under $z \mapsto -z$, $\psi \ge m$ on $D \setminus\{0\}$, and
+$\int \psi_+ \le 2mB$, then $c_2 \le B$.
+\end{theorem}
+
+The charge-free kernel ($n=0$) is Lin's tail $(R/r - 1)_+$ up to normalization; with $R = 2$ it
+gives $c_2 \le 4$. Adding charges removes mass where $\psi$ is positive but large mass is not needed.
+
+\section{Choosing the charges}\label{sec:lp}
+
+For fixed charge positions the problem ``minimize $\int\psi_+$ subject to $\psi \ge m$ on $D$'' is
+convex in $(a, c, b)$. We discretize it into a linear program (solved with HiGHS through SciPy):
+the objective is written in diamond-polar coordinates (below), in which $r\psi_+ =
+\max(a - r(c + S), 0)$ is bounded, with $S$ the charge sum; positions are placed on a grid outside $D$
+in orbits of the symmetry group of the square. Two observations improved the first attempts:
+(i) charges far from the origin (out to $r \approx 6$) with a small constant $c$, so that
+$\psi_+$ has a thin tail out to $r = a/c \approx 40$; and (ii) a normalization $m$ slightly above $1$.
+
+The kernel used below has $820$ charges: a grid of spacing $0.1$ for $1 \le r < 2.6$ and $0.5$ for
+$2.6 \le r < 6$. Its data are rounded to dyadic rationals: positions in $2^{-12}\Z$, strengths in
+$2^{-24}\Z$, and
+\[ a = \tfrac{31624813}{2^{24}} \approx 1.88498, \qquad c = \tfrac{197655}{2^{22}} \approx 0.047124,
+\qquad m = \tfrac{1003}{1000} . \]
+The configuration is invariant under both reflections $u \mapsto -u$ and $v \mapsto -v$.
+
+\section{Exact certificates}\label{sec:cert}
+
+\subsection*{Coordinates and symmetry}
+In the quadrant with signs $(\sigma_u, \sigma_v)$ the map $(r,s) \mapsto (\sigma_u rs,\ \sigma_v r(1-s))$,
+$r > 0$, $0 < s < 1$, has Jacobian $r$ and satisfies $r(z) = r$, so
+\[ \int \psi_+ = \sum_{\sigma_u, \sigma_v = \pm1} \int_0^\infty \!\! \int_0^1 \max\bigl(a - r(c + S),\ 0\bigr) \dd s \dd r, \]
+where $S$ is the charge sum at the image point. By the two reflection symmetries (checked on the
+charge list) the four quadrants contribute equally, and $\psi_+ = 0$ for $r \ge R := 64 > a/c$.
+
+\subsection*{Leaf bounds}
+A quadtree subdivides $[0, R] \times [0, 1]$ into cells $[r_0, r_1] \times [s_0, s_1]$ with dyadic corners.
+The image of a cell lies in a box $[u_0,u_1] \times [v_0,v_1]$, and for each charge the $\ell^1$
+distance to points of the box lies in $[d_{\min}, d_{\max}]$. Reciprocals are rounded outward to
+$2^{-30}\Z$: $S \ge S_{\min} = \sum_j \lfloor b_j/d_{\max,j} \rfloor_{30}$ and
+$S \le S_{\max} = \sum_j \lceil b_j/d_{\min,j} \rceil_{30}$. Each leaf gets the smaller of two bounds for
+$\iint \max(a - r(c+S), 0)$:
+\begin{itemize}[leftmargin=2em]
+\item[$J_1$:] with $k = c + S_{\min}$, the integral of $\max(a - rk, 0)$, bounded by $0$, by $a - rk$, or by
+  the chord through $(r_0, a - r_0k)$ and $(r_1, 0)$, according to the signs of $a - r_0 k$ and $a - r_1 k$;
+\item[$J_2$:] if every charge is at positive distance, no charge coordinate straddles the box, and
+  $a - r_1(c + S_{\max}) \ge 0$ (so the integrand is $a - r(c+S)$ on the cell), a tangent bound: on the box
+  each distance is an affine function $t$ of $(u,v)$, and $b/t \ge \alpha - \beta t$ for all $t>0$ whenever
+  $\alpha^2 \le 4b\beta$, $\beta \ge 0$. With rounded $\alpha \approx 2b/t_0$, $\beta \approx b/t_0^2$ at the
+  centre, this gives a polynomial upper bound $e_0 + e_1 r + e_2 r^2 + e_3 r^2 s$, integrated exactly.
+\end{itemize}
+A second quadtree on $[0,1]^2$ certifies $\psi \ge m$ on $D$, through $a \ge r_1(c + m + S_{\max})$ on each
+cell. The soundness of both checks is proved in Lean (\lean{v2\_sound}, \lean{v1\_sound}), together with
+the reduction to one quadrant (\lean{c2\_le\_of\_cert\_sym}).
+
+\subsection*{The certificate}
+The integral tree has $631{,}342$ leaves (depth $14$), chosen by a floating-point refinement
+that splits cells where the gap between the bound and the estimate is largest; $24\%$ of the leaves use
+the tangent bound. The diamond tree has $1{,}540$ leaves. The exact value of the integral certificate for
+one quadrant is $V/(6 \cdot 2^{105})$ with
+\[ V = 454850744367578333886108605087744, \qquad \frac{V}{6\cdot 2^{105}} = 1.86882276\ldots, \]
+so $\int\psi_+ \le 4V/(6\cdot2^{105})$, and Theorem~\ref{thm:charge} gives
+\[ c_2 \;\le\; \frac{4V}{2m \cdot 6 \cdot 2^{105}} = 3.7264661\ldots \;\le\; 3.7265 . \]
+
+\begin{theorem}\label{thm:main}
+$c_2 \le 7453/2000 = 3.7265$. This is \lean{ChargeKernel.Pt900.weakTypeConstant\_two\_le}, stated with
+Lin's definition \lean{CenteredMaximal.weakTypeConstant 2} and proved in Lean with the axioms
+\lean{propext}, \lean{Classical.choice}, \lean{Quot.sound} only.
+\end{theorem}
+
+\section{Checking the certificate in the kernel}\label{sec:nat}
+
+The checker is a Lean function on rationals. Lean's kernel can evaluate it (\lean{decide +kernel}),
+but each rational operation normalizes with a gcd and is slow in the kernel: a cell with $820$ charges
+costs seconds, and the full certificate would take hundreds of CPU-hours. The usual shortcut,
+\lean{native\_decide}, runs compiled code and adds the compiler to the trusted base. We avoid both.
+
+\subsection*{An exact natural-number refinement}
+All data are dyadic, so every quantity the checker computes is an integer at a fixed scale. With
+$r = R_n/2^8$ and $s = S_n/2^{14}$ for the integral tree, box coordinates and distances are integers
+times $2^{-22}$ (positions are stored with an offset $2^{32}$ to stay in $\N$), the rounded
+reciprocals and $S_{\min}, S_{\max}$ are integers times $2^{-30}$, and both leaf bounds are integers
+times $1/(6 \cdot 2^{105})$. The file \lean{CertNat.lean} re-implements the checker in these units: the
+loops over charges use only operations on $\N$, which the kernel evaluates on literals with GMP,
+and the few per-cell polynomial terms use $\Z$. It does not import Mathlib.
+The file \lean{CertNatSound.lean} proves, for decoded data,
+\[ \texttt{nChk} = \mathrm{some}\, v \;\Longrightarrow\; \texttt{v2chk} = \mathrm{some}\bigl(v/(6\cdot 2^{105})\bigr), \qquad
+\texttt{nV1} = \mathrm{true} \;\Longrightarrow\; \texttt{v1ok} = \mathrm{true}, \]
+covering every rounding step, both leaf bounds and the tree recursion. The soundness theorem of the
+rational checker is then used unchanged. In practice the natural-number checker is about two orders
+of magnitude faster in the kernel.
+
+\subsection*{Sharding}
+The integral tree is cut into subtrees of at most $32$ leaves, each checked by its own
+\lean{decide +kernel} theorem with the exact integer value of the subtree; a lemma
+\lean{nChk\_node} assembles four children into their parent. The $631{,}342$ leaves give $310$
+modules. Their kernel checks take about $20$ CPU-hours in total (about $3.5$ hours with $8$ modules
+in parallel, $1$--$2$ GB of memory each); the decoding of the charge list and the symmetry checks take
+a few seconds.
+
+\section{Trust and independent checks}
+
+The trusted base of Theorem~\ref{thm:main} is Lean's kernel, the three standard axioms, and the
+definitions in the statement. We checked that Lin's \lean{weakTypeConstant 2} is the standard
+constant: \lean{maximalFunction} averages over \lean{closedBall x r} in $\R^2$ with the sup norm,
+which is the closed square of side $2r$, and \lean{weakTypeConstant} is the infimum of the weak type
+bounds over all integrable $f$ and all levels. The new files contain no \lean{sorry}, \lean{axiom},
+\lean{implemented\_by}, \lean{extern}, \lean{unsafe}, \lean{partial} or \lean{native\_decide}.
+As further checks:
+\begin{itemize}[leftmargin=2em]
+\item an independent exact-rational transliteration of the checker in Python (\texttt{checker\_rational.py})
+  reproduces the certificate value $V/(6\cdot2^{105})$ exactly;
+\item the generator of the Lean shards recomputes every leaf value in Python and asserts it is
+  nonnegative before the kernel checks it again;
+\item an earlier version of the formalization (all modules except the $310$ shards) was replayed
+  with Lean's standalone checker \lean{leanchecker}.
+\end{itemize}
+Mathlib was used from its prebuilt cache and was not replayed from source, and the shard modules have
+not been replayed with an independent kernel implementation; both are natural further checks.
+
+\section{Limits of the method and other remarks}\label{sec:limits}
+
+\subsection*{The Cauchy generator}
+A direct linear program over all kernels on a grid, with the operator discretized, gives
+$\frac12\int K = 3.6744$, $3.6461$, $3.6416$, $3.6403$ for mesh sizes $1/10$, $1/20$, $1/30$, $1/40$
+(\texttt{kernel\_lp\_sym.py}). This suggests that the comparison principle with the Cauchy generator
+cannot give much less than $3.64$. The optimal grid kernel is not a function of $r$: it extends to
+about $1.43$ along the axes and barely beyond $D$ along the diagonals. The better bounds of
+\cite{LinRepo,Tomar} use generators of order $\alpha \in (1,2)$.
+
+\subsection*{Gap between estimate and certificate}
+The floating-point estimate for our $820$-charge kernel is $3.697$; the certificate loses $0.03$, mostly
+(about three quarters) in cells crossing the zero set of $\psi$, where only $J_1$ applies. Replacing
+point charges by charges spread uniformly over small squares, whose potentials have closed forms
+from the antiderivative $(x+y)\log(x+y)$, gives floating-point estimates down to $3.671$; formalizing
+these would need Kato's inequality for an absolutely continuous charge distribution.
+
+\subsection*{Lower bounds}
+We reproduced Lin's lower bound $1.6855$ exactly but did not improve it: searches over periodic
+configurations with up to nine atoms per cell, product families and two-scale constructions stayed
+at or below it. Tomar's $1.7027$ \cite{Tomar} uses a periodic measure with $50$ atoms per cell.
+
+\section{Reproducibility}
+
+The repository accompanying this note contains the Lean development (which depends on Lin's
+repository at a pinned commit), the kernel and certificate data, the scripts that produced them, the
+two Python reference checkers, and the generator of the Lean shards. A clean build is
+\texttt{cd lean \&\& ./build.sh}, which fetches Mathlib's cache, builds the shards as a
+memory-bounded work queue, builds the main theorem and prints its axioms.
+
+\subsection*{Acknowledgements}
+This work builds directly on Yongxi Lin's Lean formalization \cite{LinRepo}: the definition of
+$c_2$, the Cauchy generator and its potential, and the comparison argument. The research,
+the Lean development and this text were produced with the assistance of Claude (Anthropic), an AI
+system, under the author's direction.
+
+\begin{thebibliography}{99}
+\bibitem{Aldaz00} J. M. Aldaz, \emph{A remark on the centered $n$-dimensional Hardy--Littlewood maximal
+  function}, Czechoslovak Math. J. \textbf{50} (2000), 103--112.
+\bibitem{Aldaz11} J. M. Aldaz, \emph{The weak type $(1,1)$ bounds for the maximal function associated to
+  cubes grow to infinity with the dimension}, Ann. of Math. \textbf{173} (2011), 1013--1023.
+\bibitem{Lean4} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language},
+  CADE-28, Lecture Notes in Comput. Sci. \textbf{12699} (2021), 625--635.
+\bibitem{LinRepo} Y. Lin, \emph{Centred maximal constants for squares and Euclidean balls}, Lean~4
+  formalization, \url{https://github.com/CoolRmal/centered-maximal-constant} (2026); its
+  \texttt{formalization.yaml} cites Lin's unpublished manuscript proving $c_2 < 3.615749$.
+\bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, CPP 2020, 367--381.
+\bibitem{Melas} A. D. Melas, \emph{The best constant for the centered Hardy--Littlewood maximal
+  inequality}, Ann. of Math. \textbf{157} (2003), 647--688.
+\bibitem{TaoList} T. Tao et al., \emph{Optimization constants in mathematics}, entry 47a,
+  \url{https://teorth.github.io/optimizationproblems/constants/47a.html}.
+\bibitem{Tomar} T. S. Tomar, \emph{An upper bound of $3.59123$ for the weak type $(1,1)$ constant of the centred
+  maximal operator over squares}, Zenodo, \href{https://doi.org/10.5281/zenodo.23533973}{doi:10.5281/zenodo.23533973};
+  certificate at \url{https://github.com/tejasvi-releases/square-maximal-weak-type-v2}.
+\end{thebibliography}
+
+\end{document}
