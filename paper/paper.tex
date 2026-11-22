@@ -8,6 +8,8 @@
 \usepackage[margin=1.15in]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
+\usepackage{microtype}
+\emergencystretch=3em
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -202,16 +204,17 @@ the reduction to one quadrant (\lean{c2\_le\_of\_cert\_sym}).
 
 \subsection*{The certificate}
 The integral tree has $631{,}342$ leaves (depth $14$), chosen by a floating-point refinement
-that splits cells where the gap between the bound and the estimate is largest; $24\%$ of the leaves use
-the tangent bound. The diamond tree has $1{,}540$ leaves. The exact value of the integral certificate for
+that splits cells where the gap between the bound and the estimate is largest; in a random sample of
+$300$ leaves, about a quarter use the tangent bound. The diamond tree has $1{,}540$ leaves. The exact value of the integral certificate for
 one quadrant is $V/(6 \cdot 2^{105})$ with
 \[ V = 454850744367578333886108605087744, \qquad \frac{V}{6\cdot 2^{105}} = 1.86882276\ldots, \]
 so $\int\psi_+ \le 4V/(6\cdot2^{105})$, and Theorem~\ref{thm:charge} gives
 \[ c_2 \;\le\; \frac{4V}{2m \cdot 6 \cdot 2^{105}} = 3.7264661\ldots \;\le\; 3.7265 . \]
 
 \begin{theorem}\label{thm:main}
-$c_2 \le 7453/2000 = 3.7265$. This is \lean{ChargeKernel.Pt900.weakTypeConstant\_two\_le}, stated with
-Lin's definition \lean{CenteredMaximal.weakTypeConstant 2} and proved in Lean with the axioms
+$c_2 \le 7453/2000 = 3.7265$. In Lean this is the theorem
+\[ \texttt{ChargeKernel.Pt900.weakTypeConstant\_two\_le} , \]
+stated with Lin's definition \lean{CenteredMaximal.weakTypeConstant 2} and proved with the axioms
 \lean{propext}, \lean{Classical.choice}, \lean{Quot.sound} only.
 \end{theorem}
 
@@ -255,8 +258,8 @@ bounds over all integrable $f$ and all levels. The new files contain no \lean{so
 \lean{implemented\_by}, \lean{extern}, \lean{unsafe}, \lean{partial} or \lean{native\_decide}.
 As further checks:
 \begin{itemize}[leftmargin=2em]
-\item an independent exact-rational transliteration of the checker in Python (\texttt{checker\_rational.py})
-  reproduces the certificate value $V/(6\cdot2^{105})$ exactly;
+\item an independent transliteration of the rational checker in Python, in exact arithmetic
+  (\texttt{checker\_rational.py}), reproduces the certificate value $V/(6\cdot2^{105})$ exactly;
 \item the generator of the Lean shards recomputes every leaf value in Python and asserts it is
   nonnegative before the kernel checks it again;
 \item an earlier version of the formalization (all modules except the $310$ shards) was replayed
