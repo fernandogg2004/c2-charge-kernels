@@ -20,16 +20,21 @@ certificate is recomputed by the kernel.
 |---|---|---|
 | ≥ 1.7027 | Tomar (2026) | Lean |
 | ≥ 1.6855 | Lin (2026) | Lean |
-| ≤ 3.59123 | Tomar (2026) | computer-assisted proof, interval arithmetic (not Lean) |
-| ≤ 3.615749 | Lin, unpublished manuscript | not formalized |
-| **≤ 3.7265** | **this repository** | **Lean, kernel only** |
+| ≤ 3.59123 | Tomar (2026, [v3](https://github.com/tejasvi-releases/square-maximal-weak-type-v3)) | interval arithmetic, and Lean, kernel only (as stated by the author; build: several hundred CPU-hours) |
+| < 3.616 | Lin, [article](https://coolrmal.github.io/articles/two-partial-balayage-principles/) | computer-assisted; a Lean version existed in an earlier commit of Lin's `partial-balayage-lean`, later removed from its scope |
+| **≤ 3.7265** | **this repository** | **Lean, kernel only (build: about 20 CPU-hours)** |
 | ≤ 3.879 | Lin (2026) | Lean |
 | ≤ 4 | covering argument | classical |
 
-To our knowledge 3.7265 is the strongest upper bound verified in a proof assistant. It is **not** the
-best known upper bound: the two better ones above use fractional generators of order between 1 and 2.
-This work uses the Cauchy generator (order 1). For that generator, a discretized optimization over
-all kernels suggests that the method cannot go much below 3.64.
+3.7265 is **neither the best known upper bound nor the best Lean-verified one**: Tomar's
+c₂ ≤ 3.59123 is also proved in Lean with kernel-only checks. Both better bounds use fractional
+generators of order between 1 and 2, whereas this work uses the Cauchy generator (order 1). For that
+generator, a discretized optimization over all kernels suggests that the method cannot go much below
+3.64. What this repository offers instead:
+- a different and self-contained construction (charge kernels, whose admissibility is automatic);
+- a much smaller kernel-checked certificate (about 20 CPU-hours to build);
+- the technique that makes that possible: an exact natural-number refinement of a rational
+  certificate checker, with a proof that it computes exactly the same values.
 
 ## The idea in one paragraph
 
@@ -150,8 +155,9 @@ python export_lean.py pt900d_cert.json ../lean/ChargeKernel Pt900 7453/2000
 - The research, the Lean development and the paper were produced with the assistance of Claude
   (Anthropic), under the author's direction.
 
-Related work: Tomar, [square-maximal-weak-type-v2](https://github.com/tejasvi-releases/square-maximal-weak-type-v2)
-(doi:10.5281/zenodo.23533973); Tao et al., [optimization constants, entry 47a](https://teorth.github.io/optimizationproblems/constants/47a.html).
+Related work: Tomar, [square-maximal-weak-type-v3](https://github.com/tejasvi-releases/square-maximal-weak-type-v3)
+(doi:10.5281/zenodo.23543279); Lin, [Two partial balayage principles](https://coolrmal.github.io/articles/two-partial-balayage-principles/)
+and [partial-balayage-lean](https://github.com/CoolRmal/partial-balayage-lean); Tao et al., [optimization constants, entry 47a](https://teorth.github.io/optimizationproblems/constants/47a.html).
 
 ## License
 

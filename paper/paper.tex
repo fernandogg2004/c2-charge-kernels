@@ -44,10 +44,11 @@ found by linear programming, with an exact quadtree certificate of $631{,}342$ c
 The whole argument, analytic and computational, is formalized in Lean~4 with Mathlib, and is
 checked by Lean's kernel alone: the proof uses only the standard axioms and no
 \lean{native\_decide}. To make the certificate feasible for the kernel we evaluate it with a
-natural-number checker that we prove computes \emph{exactly} the values of the rational one. Better
-upper bounds for $c_2$, $3.615749$ (Lin, unpublished) and $3.59123$ (Tomar, computer-assisted
-with interval arithmetic), obtained with fractional generators, are known; to our knowledge the
-bound here is the strongest one verified in a proof assistant.
+natural-number checker that we prove computes \emph{exactly} the values of the rational one; the whole
+build takes about $20$ CPU-hours. Better upper bounds are known, obtained with fractional generators:
+$c_2 < 3.616$ (Lin) and $c_2 \le 3.59123$ (Tomar), the latter also proved in Lean with kernel-only
+checks. The interest of the present bound lies in the different construction and in the much smaller
+kernel-checked certificate.
 \end{abstract}
 
 \maketitle
@@ -62,11 +63,12 @@ Melas determined $c_1 = (11+\sqrt{61})/12 \approx 1.5675$ \cite{Melas}; no best 
 higher dimension, and Aldaz proved $c_d \to \infty$ \cite{Aldaz11}. In the plane, a covering
 argument gives $c_2 \le 4$, and Aldaz gave $c_2 \ge 1.6211$ \cite{Aldaz00}. In 2026 Lin proved
 $1.6855 \le c_2 \le 3.879$, both formalized in Lean~4 \cite{LinRepo}; these are the values recorded in
-the list of optimization constants maintained by Tao and others \cite{TaoList}. Lin also reports an
-unpublished bound $c_2 < 3.615749$, from a fractional generator of order $6/5$
-\cite{LinRepo}, and Tomar obtained $1.7027 \le c_2 \le 3.59123$ \cite{Tomar}: the lower bound is
-formalized in Lean; the upper bound, also from a fractional generator, is a computer-assisted proof
-checked with interval arithmetic.
+the list of optimization constants maintained by Tao and others \cite{TaoList}. Lin also obtained
+$c_2 < 3.616$ with a fractional generator \cite{LinArticle}; a Lean version of that proof existed in an
+earlier state of his repository \cite{LinPB} and has since been removed from its scope. Tomar obtained
+$1.7027 \le c_2 \le 3.59123$ \cite{Tomar}, with a fractional generator of order $47/40$ and a spline
+kernel: the upper bound is checked with interval arithmetic and, building on Lin's formalization, also
+proved in Lean with kernel-only checks (a build of several hundred CPU-hours), as is the lower bound.
 
 This note contributes the following.
 \begin{enumerate}[leftmargin=2em]
@@ -80,9 +82,13 @@ This note contributes the following.
 \item A technique that makes such certificates cheap for the kernel: an \emph{exact}
   natural-number refinement of a rational checker (Section~\ref{sec:nat}).
 \end{enumerate}
-As a numerical value $3.7265$ is weaker than the bounds of \cite{LinRepo,Tomar}. For the Cauchy
-generator the method itself cannot reach them: a direct discretization of the optimization
+The bound $3.7265$ is weaker than those of \cite{LinArticle,Tomar}, and Tomar's is also verified
+in Lean, so this note does not improve the best known or the best formally verified bound. For the
+Cauchy generator the method itself cannot reach them: a direct discretization of the optimization
 problem suggests that the best kernel in this setting gives about $3.64$ (Section~\ref{sec:limits}).
+What we offer is a different construction with automatic admissibility, and a kernel-checked certificate
+of about $20$ CPU-hours, roughly an order of magnitude below the several hundred reported for the
+Lean proof of \cite{Tomar}, made possible by the exact natural-number refinement.
 
 \section{The comparison principle}
 
@@ -276,7 +282,7 @@ $\frac12\int K = 3.6744$, $3.6461$, $3.6416$, $3.6403$ for mesh sizes $1/10$, $1
 (\texttt{kernel\_lp\_sym.py}). This suggests that the comparison principle with the Cauchy generator
 cannot give much less than $3.64$. The optimal grid kernel is not a function of $r$: it extends to
 about $1.43$ along the axes and barely beyond $D$ along the diagonals. The better bounds of
-\cite{LinRepo,Tomar} use generators of order $\alpha \in (1,2)$.
+\cite{LinArticle,Tomar} use generators of order $\alpha \in (1,2)$.
 
 \subsection*{Gap between estimate and certificate}
 The floating-point estimate for our $820$-charge kernel is $3.697$; the certificate loses $0.03$, mostly
@@ -312,16 +318,19 @@ system, under the author's direction.
 \bibitem{Lean4} L. de Moura and S. Ullrich, \emph{The Lean 4 theorem prover and programming language},
   CADE-28, Lecture Notes in Comput. Sci. \textbf{12699} (2021), 625--635.
 \bibitem{LinRepo} Y. Lin, \emph{Centred maximal constants for squares and Euclidean balls}, Lean~4
-  formalization, \url{https://github.com/CoolRmal/centered-maximal-constant} (2026); its
-  \texttt{formalization.yaml} cites Lin's unpublished manuscript proving $c_2 < 3.615749$.
+  formalization, \url{https://github.com/CoolRmal/centered-maximal-constant} (2026).
+\bibitem{LinArticle} Y. Lin, \emph{Two partial balayage principles} (2026),
+  \url{https://coolrmal.github.io/articles/two-partial-balayage-principles/}.
+\bibitem{LinPB} Y. Lin, \emph{Two partial balayage principles in Lean},
+  \url{https://github.com/CoolRmal/partial-balayage-lean} (2026).
 \bibitem{Mathlib} The mathlib Community, \emph{The Lean mathematical library}, CPP 2020, 367--381.
 \bibitem{Melas} A. D. Melas, \emph{The best constant for the centered Hardy--Littlewood maximal
   inequality}, Ann. of Math. \textbf{157} (2003), 647--688.
 \bibitem{TaoList} T. Tao et al., \emph{Optimization constants in mathematics}, entry 47a,
   \url{https://teorth.github.io/optimizationproblems/constants/47a.html}.
-\bibitem{Tomar} T. S. Tomar, \emph{An upper bound of $3.59123$ for the weak type $(1,1)$ constant of the centred
-  maximal operator over squares}, Zenodo, \href{https://doi.org/10.5281/zenodo.23533973}{doi:10.5281/zenodo.23533973};
-  certificate at \url{https://github.com/tejasvi-releases/square-maximal-weak-type-v2}.
+\bibitem{Tomar} T. S. Tomar, \emph{Bounds for the weak type $(1,1)$ constant of the centred maximal operator
+  over squares}, Zenodo, \href{https://doi.org/10.5281/zenodo.23543279}{doi:10.5281/zenodo.23543279};
+  certificates, checkers and Lean proofs at \url{https://github.com/tejasvi-releases/square-maximal-weak-type-v3}.
 \end{thebibliography}
 
 \end{document}
