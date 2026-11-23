@@ -111,6 +111,10 @@ The expected final output:
 'ChargeKernel.Pt900.weakTypeConstant_two_le' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
+**Verified clean build:** a fresh clone was built from scratch with `./build.sh 4` on Ubuntu 26.04
+(WSL 2, 20 threads, 8 GB RAM) in 5 h 25 min of wall time (about 20.6 CPU-hours). All 3,579 build jobs
+succeeded, and the final output was the axioms line above.
+
 ### Independent checks (Python 3, `numpy`)
 
 ```sh
