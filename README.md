@@ -122,7 +122,11 @@ The expected final output:
 `./build.sh 4` on Ubuntu 26.04 (WSL 2, 20 threads, 8 GB RAM) in 5 h 25 min of wall time (about 20.6
 CPU-hours). All 3,579 build jobs succeeded, and the final output was the axioms line above. A summary
 of the output (its final 40 lines, with timings) is in
-[`logs/clean-build-linux.log`](logs/clean-build-linux.log); the full per-module logs were not kept. This build has **not yet been reproduced
+[`logs/clean-build-linux.log`](logs/clean-build-linux.log); the full per-module logs were not kept.
+That build was of commit `416f743`, not of the current HEAD. Since then only the paper, the
+documentation, the CI workflow and Lean docstrings (comments) have changed; no Lean definition or
+proof has. The lockfile `lean/lake-manifest.json` was added afterwards: it is the file that this
+build's `lake update` produced, copied from it. This build has **not yet been reproduced
 independently**; reports of independent builds are welcome.
 
 ### Continuous integration

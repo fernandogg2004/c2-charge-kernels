@@ -96,7 +96,11 @@ $D = \{ r \le 1 \}$ be the closed unit diamond. The linear map $(u,v) \mapsto (u
 diamonds onto squares, so $c_2$ is also the weak type constant of the centred maximal operator over
 dilates of $D$. Let $A$ be the sum of the two one-dimensional Cauchy jump generators,
 \[ A\varphi(z) = \sum_{j=1}^{2} \int_{\R} \bigl( \varphi(z + t e_j) + \varphi(z - t e_j) - 2\varphi(z) \bigr)\, \frac{\dd t}{t^2}, \]
-which is $-2\pi(|D_u| + |D_v|)$ in Fourier terms. The following form of Lin's comparison principle
+which is $-2\pi(|D_u| + |D_v|)$ in Fourier terms. Here and below we use the Fourier transform
+$\widehat f(\xi,\eta) = \int f(u,v)\, e^{-i(u\xi + v\eta)} \dd u \dd v$, and $|D_u|$, $|D_v|$ are the
+multipliers $|\xi|$, $|\eta|$; with the convention $e^{-2\pi i(u\xi+v\eta)}$ used by Mathlib (and in the
+Lean sources), every frequency $\xi$ below becomes $2\pi\xi$, so that $A$ has symbol
+$-4\pi^2(|\xi|+|\eta|)$. The following form of Lin's comparison principle
 is the one we formalized (\lean{weakTypeConstant\_two\_le\_half\_integral\_of\_pos}); Lin proved it
 for one particular kernel, and the proof uses only the stated properties.
 
@@ -117,7 +121,10 @@ transfer step goes through with an inequality in place of the identity (\lean{Tr
 \section{Charge kernels}\label{sec:charges}
 
 Let $\Phi(z) = 1/(2\pi r(z))$, the potential $\int_0^\infty p_t \dd t$ of the Cauchy semigroup $(p_t)$
-below. Its Fourier transform is $1/(|\xi|+|\eta|) = \int_0^\infty e^{-t|\xi|} e^{-t|\eta|} \dd t$, so
+below, where $p_t$ is the product of two one-dimensional Cauchy densities of scale $t$, so that
+$\widehat{p_t}(\xi,\eta) = e^{-t|\xi|} e^{-t|\eta|}$. Hence
+$\widehat\Phi = \int_0^\infty e^{-t(|\xi|+|\eta|)} \dd t = 1/(|\xi|+|\eta|)$ (in Mathlib's convention,
+$\widehat{p_t} = e^{-2\pi t(|\xi|+|\eta|)}$ and $\widehat\Phi = 1/(2\pi(|\xi|+|\eta|))$), so
 $\Phi$ is the fundamental solution of $|D_u| + |D_v|$, and since $A = -2\pi(|D_u|+|D_v|)$,
 \[ A\Phi = -2\pi\,\delta_0, \qquad\text{that is,}\qquad \frac{1}{2\pi}\int \Phi\, A\varphi = -\varphi(0) \]
 for every test function $\varphi$ (this is Lin's \lean{potential\_jumpGen}). For $G = 1/r = 2\pi\Phi$ this
