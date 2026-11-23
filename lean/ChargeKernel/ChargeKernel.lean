@@ -18,12 +18,13 @@ normalisation `m > 0`, let
 
 and let the *charge kernel* be `K = ψ₊ / m` (patched to `1` at the origin, where Lean's `a / 0 = 0`).
 
-Since `G = 1 / r` is `2π` times the fundamental solution of `A = jumpGen 1`
-(`Cauchy.potential_jumpGen`), `Aψ = −2π a δ₀ + 2π ∑ bᵢ δ_{pᵢ}` is a positive measure away from the
-origin, and Kato's inequality `A(ψ₊) ≥ 1_{ψ > 0} Aψ` makes the generator of `K` a positive measure
+Since `G = 1 / r = 2π Φ`, where the potential `Φ = 1 / (2π r)` satisfies `A Φ = −2π δ₀` for
+`A = jumpGen 1` (`Cauchy.potential_jumpGen`), `Aψ = −4π² a δ₀ + 4π² ∑ bᵢ δ_{pᵢ}` is a positive
+measure away from the origin, and Kato's inequality `A(ψ₊) ≥ 1_{ψ > 0} Aψ` makes the generator of `K` a positive measure
 minus a point mass at the origin. In this file that generator condition is the hypothesis `hgen` of
 `weakTypeConstant_two_le_of_chargeKernel`; it is proved in `ChargeKato.lean` (`ChargeData.kernel_pos`),
-and `Main.lean` combines the two. Everything else needed by the comparison principle is proved here: nonnegativity, evenness (for a configuration symmetric under
+and `Main.lean` combines the two. Everything else needed by the comparison principle is proved here:
+nonnegativity, evenness (for a configuration symmetric under
 `z ↦ −z`), compact support, integrability, and `K ≥ 1` on the unit diamond (from a lower bound
 `ψ ≥ m` there).
 

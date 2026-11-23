@@ -1,0 +1,79 @@
+# Lightweight CI. A full build (310 certificate shards, about 20 CPU-hours) does not fit a free
+# runner; this job builds all the proof infrastructure, the diamond check and a sample of shards,
+# checks the axioms of the key theorems, scans for escapes and runs the Python checker.
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lightweight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan the Lean sources for escapes
+        run: |
+          if grep -rnP '(?<![`\w])(sorry|native_decide|implemented_by)(?![`\w])|@\[extern|^\s*(unsafe|partial)\s|^\s*axiom\s' \
+               lean --include=*.lean; then
+            echo "found a sorry / native_decide / implemented_by / extern / unsafe / partial / axiom"; exit 1
+          fi
+          echo "no escapes found"
+
+      - name: Python checker (natural-number vs rational leaf values)
+        run: cd certificate && python3 checker_nat.py pt900d_cert.json 100
+
+      - name: Install elan
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+
+      - name: Fetch Mathlib cache
+        working-directory: lean
+        run: lake exe cache get
+
+      - name: Build the proof infrastructure
+        working-directory: lean
+        run: lake build ChargeKernel.Main ChargeKernel.CertNatSound ChargeKernel.CertBridgeSym
+
+      - name: Kernel-check the diamond tree and sample certificate shards
+        working-directory: lean
+        run: lake build ChargeKernel.Pt900.V1 ChargeKernel.Pt900.F154 ChargeKernel.Pt900.F309 ChargeKernel.Pt900.F025
+
+      - name: Check axioms
+        working-directory: lean
+        run: |
+          {
+            echo "import ChargeKernel.Main"
+            echo "import ChargeKernel.CertNatSound"
+            echo "import ChargeKernel.CertBridgeSym"
+            echo "import ChargeKernel.Pt900.V1"
+            for f in F154 F309 F025; do echo "import ChargeKernel.Pt900.$f"; done
+            for t in CenteredMaximal.General.weakTypeConstant_two_le_of_charge \
+                     CenteredMaximal.General.c2_le_of_cert_sym \
+                     CenteredMaximal.General.nChk_spec CenteredMaximal.General.nV1_spec \
+                     ChargeKernel.Pt900.w_r; do
+              echo "#print axioms $t"
+            done
+            for f in F154 F309 F025; do
+              t=$(grep -o '^theorem k_r[0-9]*' ChargeKernel/Pt900/$f.lean | tail -1 | cut -d' ' -f2)
+              echo "#print axioms ChargeKernel.Pt900.$t"
+            done
+          } > /tmp/Axioms.lean
+          lake env lean /tmp/Axioms.lean | tee /tmp/axioms.txt
+          python3 - <<'EOF'
+          import re
+          txt = open("/tmp/axioms.txt").read().replace("\n", " ")
+          lists = re.findall(r"depends on axioms: \[([^\]]*)\]", txt)
+          none = len(re.findall(r"does not depend on any axioms", txt))
+          assert len(lists) + none == 8, f"expected 8 results, got {len(lists) + none}"
+          assert "error" not in txt.lower(), "Lean reported an error"
+          ok = {"propext", "Classical.choice", "Quot.sound"}
+          for l in lists:
+              ax = {a.strip() for a in l.split(",") if a.strip()}
+              assert ax <= ok, f"unexpected axioms: {ax - ok}"
+          print("all 8 theorems use only the standard axioms")
+          EOF

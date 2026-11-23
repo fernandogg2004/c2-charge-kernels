@@ -8,7 +8,9 @@ This repository proves
 
 $$c_2 \le \frac{7453}{2000} = 3.7265$$
 
-in **Lean 4 + Mathlib, checked by Lean's kernel alone**. The proof uses only the standard axioms
+in **Lean 4 + Mathlib, checked by Lean's kernel alone**.
+
+[![CI](https://github.com/fernandogg2004/c2-charge-kernels/actions/workflows/ci.yml/badge.svg)](https://github.com/fernandogg2004/c2-charge-kernels/actions/workflows/ci.yml) The proof uses only the standard axioms
 (`propext`, `Classical.choice`, `Quot.sound`). It does not use `native_decide`: every number in the
 certificate is recomputed by the kernel.
 
@@ -20,27 +22,27 @@ certificate is recomputed by the kernel.
 |---|---|---|
 | ≥ 1.7027 | Tomar (2026) | Lean |
 | ≥ 1.6855 | Lin (2026) | Lean |
-| ≤ 3.59123 | Tomar (2026, [v3](https://github.com/tejasvi-releases/square-maximal-weak-type-v3)) | interval arithmetic, and Lean, kernel only (as stated by the author; build: several hundred CPU-hours) |
+| ≤ 3.59123 | Tomar (2026, [repository](https://github.com/tejasvi/square-maximal-weak-type)) | interval arithmetic, and Lean, kernel only (as stated by the author) |
 | < 3.616 | Lin, [article](https://coolrmal.github.io/articles/two-partial-balayage-principles/) | computer-assisted; a Lean version existed in an earlier commit of Lin's `partial-balayage-lean`, later removed from its scope |
-| **≤ 3.7265** | **this repository** | **Lean, kernel only (build: about 20 CPU-hours)** |
+| **≤ 3.7265** | **this repository** | **Lean, kernel only** |
 | ≤ 3.879 | Lin (2026) | Lean |
 | ≤ 4 | covering argument | classical |
 
 3.7265 is **neither the best known upper bound nor the best Lean-verified one**: Tomar's
 c₂ ≤ 3.59123 is also proved in Lean with kernel-only checks. Both better bounds use fractional
 generators of order between 1 and 2, whereas this work uses the Cauchy generator (order 1). For that
-generator, a discretized optimization over all kernels suggests that the method cannot go much below
-3.64. What this repository offers instead:
+generator, a discretized optimization over all kernels gives about 3.64. That is numerical evidence
+about a discretization, not a proved limit of the method. What this repository offers instead:
 - a different and self-contained construction (charge kernels, whose admissibility is automatic);
-- a much smaller kernel-checked certificate (about 20 CPU-hours to build);
-- the technique that makes that possible: an exact natural-number refinement of a rational
+- a technique for kernel-checked certificates: an exact natural-number refinement of a rational
   certificate checker, with a proof that it computes exactly the same values.
 
 ## The idea in one paragraph
 
 Lin's comparison principle gives c₂ ≤ ½∫K for any kernel K ≥ 0 that is even, integrable, compactly
 supported, at least 1 on the unit diamond {|u|+|v| ≤ 1}, and satisfies AK + aδ₀ ≥ 0, where A is the
-Cauchy generator. Since 1/(|u|+|v|) is a fundamental solution of A, the **charge kernels**
+Cauchy generator. Since A(1/(|u|+|v|)) = −4π²δ₀ (so 1/(|u|+|v|) is a fundamental solution of A up
+to a constant), the **charge kernels**
 
   ψ = a/(|u|+|v|) − Σⱼ bⱼ/(|u−pⱼ|+|v−qⱼ|) − c,   K = ψ₊/m
 
@@ -116,9 +118,25 @@ The expected final output:
 'ChargeKernel.Pt900.weakTypeConstant_two_le' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
-**Verified clean build:** a fresh clone was built from scratch with `./build.sh 4` on Ubuntu 26.04
-(WSL 2, 20 threads, 8 GB RAM) in 5 h 25 min of wall time (about 20.6 CPU-hours). All 3,579 build jobs
-succeeded, and the final output was the axioms line above.
+**Clean build, verified by the author only:** a fresh clone was built from scratch with
+`./build.sh 4` on Ubuntu 26.04 (WSL 2, 20 threads, 8 GB RAM) in 5 h 25 min of wall time (about 20.6
+CPU-hours). All 3,579 build jobs succeeded, and the final output was the axioms line above. A summary
+of the output (its final 40 lines, with timings) is in
+[`logs/clean-build-linux.log`](logs/clean-build-linux.log); the full per-module logs were not kept. This build has **not yet been reproduced
+independently**; reports of independent builds are welcome.
+
+### Continuous integration
+
+A full build does not fit a free CI runner, so the [CI workflow](.github/workflows/ci.yml) is
+lightweight. On every push it:
+- builds all the proof infrastructure, including the comparison principle, Kato's inequality, the
+  checker soundness and the exactness of the natural-number checker;
+- checks a sample of the certificate shards and the diamond-check module with the kernel;
+- prints the axioms of the main soundness theorems;
+- scans the sources for `sorry`, `native_decide` and other escapes;
+- runs `checker_nat.py` on random leaves.
+
+It does not build the 310 shards or the main theorem.
 
 ### Independent checks (Python 3, `numpy`)
 
@@ -155,8 +173,8 @@ python export_lean.py pt900d_cert.json ../lean/ChargeKernel Pt900 7453/2000
 - The research, the Lean development and the paper were produced with the assistance of Claude
   (Anthropic), under the author's direction.
 
-Related work: Tomar, [square-maximal-weak-type-v3](https://github.com/tejasvi-releases/square-maximal-weak-type-v3)
-(doi:10.5281/zenodo.23543279); Lin, [Two partial balayage principles](https://coolrmal.github.io/articles/two-partial-balayage-principles/)
+Related work: Tomar, [square-maximal-weak-type](https://github.com/tejasvi/square-maximal-weak-type)
+(doi:10.5281/zenodo.23716077); Lin, [Two partial balayage principles](https://coolrmal.github.io/articles/two-partial-balayage-principles/)
 and [partial-balayage-lean](https://github.com/CoolRmal/partial-balayage-lean); Tao et al., [optimization constants, entry 47a](https://teorth.github.io/optimizationproblems/constants/47a.html).
 
 ## License

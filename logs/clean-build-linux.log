@@ -1,0 +1,53 @@
+# Clean build of a fresh clone on Ubuntu 26.04 (WSL 2, 20 threads, 8 GB RAM), commit 416f743,
+# with: lake update && ./build.sh 4.
+# This is a summary: the build script kept only the final 40 lines of the build output (lines
+# announcing each finished shard were filtered), and the per-module logs were not retained.
+
+start Sun Nov 22 21:12:17 CET 2026
+Using cache from origin: (some leanprover-community/mathlib4)
+Decompressing 8942 already-cached file(s) (1 already decompressed)
+No files to download
+Decompressed 8942 already-cached file(s)
+Completed successfully in 22234 ms!
+real	1m52.708s
+user	1m22.490s
+sys	1m32.389s
+manifest: lake-manifest.json
+  integral_finset_̵s̵S̲um
+warning: ChargeKernel/ChargeKato.lean:149:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ChargeKernel/ChargeKato.lean:197:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: ChargeKernel/ChargeKato.lean:256:4: Try this: 
+  haveI̵
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: ChargeKernel/ChargeKato.lean:348:4: Try this: 
+  haveI̵
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [3574/3579] Replayed ChargeKernel.CertBridge
+warning: ChargeKernel/CertBridge.lean:146:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [3575/3579] Replayed ChargeKernel.CertBridgeSym
+warning: ChargeKernel/CertBridgeSym.lean:73:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+✔ [3576/3579] Built ChargeKernel.Pt900.V1 (75s)
+✔ [3577/3579] Built ChargeKernel.Pt900.Final (10s)
+✔ [3578/3579] Built ChargeKernel (982ms)
+Build completed successfully (3579 jobs).
+'ChargeKernel.Pt900.weakTypeConstant_two_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+real	325m30.506s
+user	1234m8.425s
+sys	89m29.284s
+built shards: 311
+end Mon Nov 23 02:39:43 CET 2026
+[exited with code 0]
